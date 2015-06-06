@@ -148,11 +148,11 @@ class Key(Scene):
 
         if choice == "1":
             inventory.add("key")
-            return 'treasure_chest'
+            return 'x_marks_the_spot'
         elif choice == "2":
             location = 'key'
             print "You missed the treasure. Enjoy your beach"
-            return 'treasure_chest'
+            return 'leave'
 
         else:
             print "Wrong choice ... try again."
@@ -162,7 +162,7 @@ class XMarksTheSpot(Scene):
 
     def enter(self):
         print "You walk further south until you see a sandcastle the ocean has almost "
-        print "completely washed away.  Some seashells appear to be in the center in an unnatural "
+        print "completely washed away.  Some seashells appear to be in the center in a "
         print "pattern, but you can barely see them."
 
 
@@ -180,7 +180,7 @@ class XMarksTheSpot(Scene):
             return 'leaving'  # leave
         else:
             print "I don't understand that! Please try again."
-            return 'xMarksTheSpot'
+            return 'x_marks_the_spot'
 
 class Digging(Scene):
     def enter(self):
@@ -196,11 +196,13 @@ class Digging(Scene):
 
         if choice == "1":
             if 'shovel' in inventory:
-                return 'hit_something' #need to add
+                #return 'hit_something' #need to add
+                return 'treasure_chest'
             else:
                 print "You don't have a shovel, but you went back to get the one you found earlier so that you can start digging."
                 inventory.add('shovel')
-                return 'hit_something'
+                #return 'hit_something'
+                return 'treasure_chest'
         elif choice == "2":
             return 'leaving'
         else:
@@ -303,7 +305,7 @@ class Map(object):
         'finished': Finished(),
         'digging': Digging(),
         'investigate': Investigate(),
-        'XMarksTheSpot': XMarksTheSpot(),
+        'x_marks_the_spot': XMarksTheSpot(),
         'unlock': Unlock(),
         'treasure_chest': TreasureChest(),
         'hitsomething': HitSomething(),
