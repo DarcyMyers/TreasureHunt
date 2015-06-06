@@ -227,12 +227,18 @@ class HitSomething(Scene):
 
         if choice == "1":
             if 'key' in inventory:
-
+                print "\n"
+                print "\n"
                 print "The golden key doesn't unlock the chest."
+                print "\n"
+                print "\n"
                 return 'hit_something' #need to add
             else:
+                print "\n"
+                print "\n"
                 print "You don't have the key. No problem. You went back to get the key."
                 print "The golden key doesn't unlock the chest."
+                print "\n"
                 print "\n"
                 inventory.add('key')
                 return 'hit_something'
@@ -261,24 +267,35 @@ class Investigate(Scene):
 
         elif choice == "2":
             if 'key' in inventory:
+                print "\n"
+                print "\n"
                 print "Oh no! The golden key doesn't work. Do you want to try the heart?"
+                print "\n"
                 print "\n"
                 return 'investigate'
             else:
+                print "\n"
+                print "\n"
                 print "You don't have the key. No problem. You went back to get the key."
                 print "Oh no! The golden key doesn't work. Do you want to try the heart?"
+                print "\n"
                 print "\n"
                 inventory.add('key')
                 return 'investigate'
         else:
+            print "\n"
+            print "\n"
             print "I don't understand that! Please try again."
+            print "\n"
             print "\n"
             return 'investigate'
 
 class Unlock(Scene):
     def enter(self):
+        print "\n"
+        print "\n"
         print "The glass heart fits in the indentation and you can't take it back out."
-
+        print "\n"
         print "\n"
         print "Do you:"
         print "1. Try unlocking the chest with the golden key again." # try again message
@@ -288,24 +305,35 @@ class Unlock(Scene):
         choice = raw_input(">")
 
         if choice == "1":
+            print "\n"
+            print "\n"
             return 'treasure_chest'
-
+            print "\n"
+            print "\n"
         elif choice == "2":
             return 'leave'
         else:
+            print "\n"
+            print "\n"
             print "I don't understand that! Please try again."
+            print "\n"
+            print "\n"
             return 'unlock'
 
 class TreasureChest(Scene):
     def enter(self):
+        print "\n"
+        print "\n"
         print "The treasure chest opens and it is filled with gold Spanish doubloons. "
-
+        print "\n"
+        print "\n"
         return 'finished'
 
 
 class Finished(Scene):
 
     def enter(self):
+        print "\n"
         print "You are now rich! Congratulations!"
         return 'finished'
 
