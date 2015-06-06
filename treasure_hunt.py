@@ -1,10 +1,13 @@
 from sys import exit
 from random import randint
 
+
+inventory = set()
+location = 'start_facing_ocean'
+
 class Scene(object):
 
     def enter(self):
-        print "This scene is not yet configured. Subclass it and implement enter()."
         exit(1)
 
 
@@ -38,10 +41,6 @@ class Medical(Scene):
         print "You are injured and must seek medical attention."
         exit(1)
 
-        ##  Do we want to add option for whether or not the player gets help?
-        ##  If yes, ...??  Continue the game
-        ##  If no, end the game, perhaps?
-
 
 class Leaving(Scene):
 
@@ -59,8 +58,6 @@ class Leaving(Scene):
         else:
             exit(1)
 
-        ##  Need to explore what we do for option 1 and 2 ... are we getting
-	    ##  further away from the treasure?
 
 
 class StartFacingOcean(Scene):
@@ -157,17 +154,6 @@ class XMarksTheSpot(Scene):
 
     def enter(self):
         print "You walk further south until you see a sandcastle the ocean has almost "
-<<<<<<< HEAD
-        print "completely washed away. Some seashells have been used to create an X "
-        print "in the center of it that you can barely see. You get your pink plastic "
-        print "shovel out of your pail and start to dig the X. Your shovel hits "
-        print "something hard. You dig it out using your hands and shovel until you "
-        print "have a small wooden treasure chest. It has a lock on the front of it. "
-        print "You try your golden jeweled key to open it, but it won't open. You"
-        print "notice a heart shaped indentation on top of the treasure chest. "
-        print "You push your heart shaped piece of pink sea glass into the indentation "
-        print "and it fits perfectly. You try to open the lock again with your key. "
-=======
         print "completely washed away.  Some seashells appear to be in the center in an unnatural "
         print "pattern, but you can barely see them."
 
@@ -298,12 +284,10 @@ class Map(object):
         'leaving': Leaving(),
         'medical': Medical(),
         'finished': Finished(),
-        'navigate': Navigate(),
         'digging': Digging(),
 
     }
 
-    ## Need more scenes definitions ... eg., inventory, walk on beach, etc
 
     def __init__(self, start_scene):
         self.start_scene = start_scene
