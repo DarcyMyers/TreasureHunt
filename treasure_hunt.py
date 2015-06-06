@@ -65,13 +65,13 @@ class StartFacingOcean(Scene):
     def enter(self):
         print "You stand barefoot on North Padre Island sand"
         print "facing west to the Gulf of Mexico. Before you, in the sand, is a small "
-        print "pink bucket with your name on it. You pick it up.  A laughing seagull "
+        print "pink pail with your name on it. You pick it up.  A laughing seagull "
         print "flies over your head and cackles at you, dropping one of its feathers "
         print "to the south of you."
         print "\n"
         print "Do you:"
-        print "1. Catch the feather as it falls through the air and put it in your bucket."
-        print "2. Wait until it falls to the sand to pick it up and put it in your bucket."
+        print "1. Catch the feather as it falls through the air and put it in your pail."
+        print "2. Wait until it falls to the sand to pick it up and put it in your pail."
         print "3. Do not touch it because you are afraid you will contract bird flu."
 
         choice = raw_input("> ")
@@ -231,7 +231,9 @@ class HitSomething(Scene):
                 print "The golden key doesn't unlock the chest."
                 return 'hit_something' #need to add
             else:
-                print "Sorry, you didn't think to pick up the key. So you went back to get the key you found earlier so you can try unlocking the c."
+                print "You don't have the key. No problem. You went back to get the key."
+                print "The golden key doesn't unlock the chest."
+                print "\n"
                 inventory.add('key')
                 return 'hit_something'
         elif choice == "2":
@@ -260,13 +262,17 @@ class Investigate(Scene):
         elif choice == "2":
             if 'key' in inventory:
                 print "Oh no! The golden key doesn't work. Do you want to try the heart?"
+                print "\n"
                 return 'investigate'
             else:
-                print "No problem. You went back to get the key."
+                print "You don't have the key. No problem. You went back to get the key."
+                print "Oh no! The golden key doesn't work. Do you want to try the heart?"
+                print "\n"
                 inventory.add('key')
                 return 'investigate'
         else:
             print "I don't understand that! Please try again."
+            print "\n"
             return 'investigate'
 
 class Unlock(Scene):
