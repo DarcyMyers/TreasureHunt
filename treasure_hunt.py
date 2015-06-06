@@ -189,14 +189,13 @@ class Digging(Scene):
         print "\n"
         print "Do you:"
         print "1. Start digging."
-        # check to see you have shovel
         print "2. Keep walking."
 
         choice = raw_input(">")
 
         if choice == "1":
             if 'shovel' in inventory:
-                #return 'hit_something' #need to add
+                #return 'hit_something'
                 return 'treasure_chest'
             else:
                 print "You don't have a shovel, but you went back to get the one you found earlier so that you can start digging."
@@ -232,7 +231,7 @@ class HitSomething(Scene):
                 print "The golden key doesn't unlock the chest."
                 return 'hit_something' #need to add
             else:
-                print "Sorry, you didn't think to pick up the key. So you went back to get the key you found earlier so you can try unlocking the chest."
+                print "Sorry, you didn't think to pick up the key. So you went back to get the key you found earlier so you can try unlocking the c."
                 inventory.add('key')
                 return 'hit_something'
         elif choice == "2":
@@ -266,7 +265,7 @@ class Investigate(Scene):
             return 'unlock'
         else:
             print "I don't understand that! Please try again."
-            return 'HitSomething'
+            return 'hit_something'
 
 class Unlock(Scene):
     def enter(self):
@@ -278,6 +277,16 @@ class Unlock(Scene):
         # check for golden key
         print "2. Shake the box and give up because it won't open."
 
+        choice = raw_input(">")
+
+        if choice == "1":
+            return 'treasure_chest'
+
+        elif choice == "2":
+            return 'leave'
+        else:
+            print "I don't understand that! Please try again."
+            return 'unlock'
 
 class TreasureChest(Scene):
     def enter(self):
