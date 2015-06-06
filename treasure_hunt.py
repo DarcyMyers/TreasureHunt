@@ -195,13 +195,13 @@ class Digging(Scene):
 
         if choice == "1":
             if 'shovel' in inventory:
-                #return 'hit_something'
-                return 'treasure_chest'
+                return 'hit_something'
+                #return 'treasure_chest'
             else:
                 print "You don't have a shovel, but you went back to get the one you found earlier so that you can start digging."
                 inventory.add('shovel')
-                #return 'hit_something'
-                return 'treasure_chest'
+                return 'hit_something'
+                #return 'treasure_chest'
         elif choice == "2":
             return 'leaving'
         else:
@@ -317,7 +317,7 @@ class Map(object):
         'x_marks_the_spot': XMarksTheSpot(),
         'unlock': Unlock(),
         'treasure_chest': TreasureChest(),
-        'hitsomething': HitSomething(),
+        'hit_something': HitSomething(),
     }
 
 
