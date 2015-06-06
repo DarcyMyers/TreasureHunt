@@ -1,7 +1,6 @@
 from sys import exit
 from random import randint
 
-
 inventory = set()
 location = 'start_facing_ocean'
 
@@ -45,19 +44,20 @@ class Medical(Scene):
 class Leaving(Scene):
 
     def enter(self):
-        print "1. Turn around and walk along the beach."
+        print "1. Turn around and walk north along the beach."
         print "2. Stare out at the ocean."
         print "3  Walk into the Gulf of Mexico until you are knee deep in the water and can feel the waves."
 
         choice = raw_input("> ")
 
         if choice == "1":
-            return 'navigate'
+            print "So long.  Enjoy your walk!"
+        elif choice == "2":
+            print "Nice scenery?  See any flying fish?  Hope you like the view!"
         elif choice == "3":
             return 'medical'
-        else:
-            exit(1)
 
+        exit(1)
 
 
 class StartFacingOcean(Scene):
@@ -77,6 +77,7 @@ class StartFacingOcean(Scene):
         choice = raw_input("> ")
 
         if choice == "1" or choice == "2":
+            inventory.add("feather")
             return 'glass'
         elif choice == "3":
             return 'leaving'
@@ -99,10 +100,13 @@ class Glass(Scene):
 
         choice = raw_input("> ")
 
-        if choice == "2" or choice == "3":
+        if choice == "2":
             return 'leaving'
         elif choice == "1":
+            inventory.add("glass")
             return 'shovel'
+        elif choice == "3":
+            location = 'glass'
         else:
             print "I don't understand that!"
             return 'glass'
@@ -121,8 +125,10 @@ class Shovel(Scene):
         choice = raw_input(">")
 
         if choice == "1" or choice == "2":
+            location = 'shovel'
             return 'leaving'
         elif choice == "3":
+            inventory.add("shovel")
             return 'key'
         else:
             print "I don't understand that!"
@@ -133,7 +139,7 @@ class Key(Scene):
     def enter(self):
         print "As you walk down the beach, you notice a glare in the sand."
         print "At close inspection, you see that it's an old key."
-        print "Quick, what do you do? \m"
+        print "Quick, what do you do? \n"
 
         print "1. Pick it up and put it in your pink pail."
         print "2. Ignore it, keep walking."
@@ -141,10 +147,12 @@ class Key(Scene):
         choice = raw_input("> ")
 
         if choice == "1":
+            inventory.add("key")
             return 'treasure_chest'
         elif choice == "2":
+            location = 'key'
             print "You missed the treasure. Enjoy your beach"
-            return 'leaving'
+            return 'treasure_chest'
 
         else:
             print "Wrong choice ... try again."
@@ -157,12 +165,14 @@ class XMarksTheSpot(Scene):
         print "completely washed away.  Some seashells appear to be in the center in an unnatural "
         print "pattern, but you can barely see them."
 
+
         print "\n"
         print "Do you:"
         print "1. Investigate."
         print "2. Keep walking." # leave
 
         choice = raw_input(">")
+
 
         if choice == "1":
             return 'digging'
@@ -260,7 +270,7 @@ class Unlock(Scene):
         print "2. Shake the box and give up because it won't open."
 
 
-class Treasure(Scene):
+class TreasureChest(Scene):
     def enter(self):
         print "The treasure chest opens and it is filled with gold Spanish doubloons. "
 
@@ -270,6 +280,7 @@ class Treasure(Scene):
 class Finished(Scene):
 
     def enter(self):
+        print(inventory)
         print "You are now rich! Congratulations!"
         return 'finished'
 
@@ -280,12 +291,15 @@ class Map(object):
         'glass': Glass(),
         'shovel': Shovel(),
         'key': Key(),
-        'treasure_chest': TreasureChest(),
         'leaving': Leaving(),
         'medical': Medical(),
         'finished': Finished(),
         'digging': Digging(),
-
+        'investigate': Investigate(),
+        'XMarksTheSpot': XMarksTheSpot(),
+        'unlock': Unlock(),
+        'treasure_chest': TreasureChest(),
+        'hitsomething': HitSomething(),
     }
 
 
