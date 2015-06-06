@@ -255,17 +255,19 @@ class Investigate(Scene):
         choice = raw_input(">")
 
         if choice == "1":
-            # check and make sure you have the key
-            # if not ask if want to get it
-
-            print "The golden key doesn't unlock the chest."
-            return 'hit_something' #need to add
+            return 'unlock'
 
         elif choice == "2":
-            return 'unlock'
+            if 'key' in inventory:
+                print "Oh no! The golden key doesn't work. Do you want to try the heart?"
+                return 'investigate'
+            else:
+                print "No problem. You went back to get the key."
+                inventory.add('key')
+                return 'investigate'
         else:
             print "I don't understand that! Please try again."
-            return 'hit_something'
+            return 'investigate'
 
 class Unlock(Scene):
     def enter(self):
@@ -298,7 +300,6 @@ class TreasureChest(Scene):
 class Finished(Scene):
 
     def enter(self):
-        print(inventory)
         print "You are now rich! Congratulations!"
         return 'finished'
 
