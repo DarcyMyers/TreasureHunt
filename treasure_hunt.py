@@ -1,10 +1,12 @@
 from sys import exit
 from random import randint
 
+inventory = set()
+location = 'start_facing_ocean'
+
 class Scene(object):
 
     def enter(self):
-        print "This scene is not yet configured. Subclass it and implement enter()."
         exit(1)
 
 
@@ -38,29 +40,24 @@ class Medical(Scene):
         print "You are injured and must seek medical attention."
         exit(1)
 
-        ##  Do we want to add option for whether or not the player gets help?
-        ##  If yes, ...??  Continue the game
-        ##  If no, end the game, perhaps?
-
 
 class Leaving(Scene):
 
     def enter(self):
-        print "1. Turn around and walk along the beach."
+        print "1. Turn around and walk north along the beach."
         print "2. Stare out at the ocean."
         print "3  Walk into the Gulf of Mexico until you are knee deep in the water and can feel the waves."
 
         choice = raw_input("> ")
 
         if choice == "1":
-            return 'navigate'
+            print "So long.  Enjoy your walk!"
+        elif choice == "2":
+            print "Nice scenery?  See any flying fish?  Hope you like the view!"
         elif choice == "3":
             return 'medical'
-        else:
-            exit(1)
 
-        ##  Need to explore what we do for option 1 and 2 ... are we getting
-	    ##  further away from the treasure?
+        exit(1)
 
 
 class StartFacingOcean(Scene):
@@ -80,6 +77,7 @@ class StartFacingOcean(Scene):
         choice = raw_input("> ")
 
         if choice == "1" or choice == "2":
+            inventory.add("feather")
             return 'glass'
         elif choice == "3":
             return 'leaving'
@@ -102,10 +100,13 @@ class Glass(Scene):
 
         choice = raw_input("> ")
 
-        if choice == "2" or choice == "3":
+        if choice == "2":
             return 'leaving'
         elif choice == "1":
+            inventory.add("glass")
             return 'shovel'
+        elif choice == "3":
+            location = 'glass'
         else:
             print "I don't understand that!"
             return 'glass'
@@ -124,8 +125,10 @@ class Shovel(Scene):
         choice = raw_input(">")
 
         if choice == "1" or choice == "2":
+            location = 'shovel'
             return 'leaving'
         elif choice == "3":
+            inventory.add("shovel")
             return 'key'
         else:
             print "I don't understand that!"
@@ -136,7 +139,7 @@ class Key(Scene):
     def enter(self):
         print "As you walk down the beach, you notice a glare in the sand."
         print "At close inspection, you see that it's an old key."
-        print "Quick, what do you do? \m"
+        print "Quick, what do you do? \n"
 
         print "1. Pick it up and put it in your pink pail."
         print "2. Ignore it, keep walking."
@@ -144,10 +147,12 @@ class Key(Scene):
         choice = raw_input("> ")
 
         if choice == "1":
+            inventory.add("key")
             return 'treasure_chest'
         elif choice == "2":
+            location = 'key'
             print "You missed the treasure. Enjoy your beach"
-            return 'leaving'
+            return 'treasure_chest'
 
         else:
             print "Wrong choice ... try again."
@@ -159,6 +164,7 @@ class XMarksTheSpot(Scene):
         print "You walk further south until you see a sandcastle the ocean has almost "
         print "completely washed away.  Some seashells appear to be in the center in an unnatural "
         print "pattern, but you can barely see them."
+
 
         print "\n"
         print "Do you:"
@@ -181,14 +187,19 @@ class Digging(Scene):
 
         print "\n"
         print "Do you:"
-        print "1. Start digging on the X with your shovel."
+        print "1. Start digging."
         # check to see you have shovel
         print "2. Keep walking."
 
         choice = raw_input(">")
 
         if choice == "1":
-            return 'hitSomething' #need to add
+            if 'shovel' in inventory:
+                return 'hit_something' #need to add
+            else:
+                print "You don't have a shovel, but you went back to get the one you found earlier so that you can start digging."
+                inventory.add('shovel')
+                return 'hit_something'
         elif choice == "2":
             return 'leaving'
         else:
@@ -213,17 +224,19 @@ class HitSomething(Scene):
         choice = raw_input(">")
 
         if choice == "1":
-            # check and make sure you have the key
-            # if not ask if want to get it
+            if 'key' in inventory:
 
-            print "The golden key doesn't unlock the chest."
-            return 'HitSomething' #need to add
-
+                print "The golden key doesn't unlock the chest."
+                return 'hit_something' #need to add
+            else:
+                print "Sorry, you didn't think to pick up the key. So you went back to get the key you found earlier so you can try unlocking the chest."
+                inventory.add('key')
+                return 'hit_something'
         elif choice == "2":
             return 'investigate'
         else:
             print "I don't understand that! Please try again."
-            return 'HitSomething'
+            return 'hit_something'
 
 
 class Investigate(Scene):
@@ -239,12 +252,12 @@ class Investigate(Scene):
 
         choice = raw_input(">")
 
-        if choice == "2":
+        if choice == "1":
             # check and make sure you have the key
             # if not ask if want to get it
 
             print "The golden key doesn't unlock the chest."
-            return 'HitSomething' #need to add
+            return 'hit_something' #need to add
 
         elif choice == "2":
             return 'unlock'
@@ -269,11 +282,6 @@ class Treasure(Scene):
 
         return 'finished'
 
-class Navigate(Scene):
-
-    def enter(self):
-        print "-------- NAVIGATE"
-        return 'finished'
 
 class Finished(Scene):
 
