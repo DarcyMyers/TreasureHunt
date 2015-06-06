@@ -153,19 +153,118 @@ class Key(Scene):
             print "Wrong choice ... try again."
             return 'key'
 
-class TreasureChest(Scene):
+class XMarksTheSpot(Scene):
 
     def enter(self):
         print "You walk further south until you see a sandcastle the ocean has almost "
-        print "completely washed away.  Some seashells have been used to create an X "
-        print "in the center of it that you can barely see .You get your pink plastic "
-        print "shovel out of your pail and start to dig at the X.  Your shovel hits "
-        print "something hard.  You dig it out using your hands and shovel until you "
-        print "have a small wooden treasure chest. It has a lock on the front of it. "
-        print "You try your golden jeweled key to open it, but it won't open.  You"
-        print "notice a heart shaped indentation on top of the treasure chest. "
-        print "You push your heart shaped piece of pink sea glass into the indentation "
-        print "and it fits perfectly.  You try to open the lock again with your key. "
+        print "completely washed away.  Some seashells appear to be in the center in an unnatural "
+        print "pattern, but you can barely see them."
+
+        print "\n"
+        print "Do you:"
+        print "1. Investigate."
+        print "2. Keep walking." # leave
+
+        choice = raw_input(">")
+
+        if choice == "1":
+            return 'digging'
+        elif choice == "2":
+            return 'leaving'  # leave
+        else:
+            print "I don't understand that! Please try again."
+            return 'xMarksTheSpot'
+
+class Digging(Scene):
+    def enter(self):
+        print "The seashells are in an X pattern."
+
+        print "\n"
+        print "Do you:"
+        print "1. Start digging on the X with your shovel."
+        # check to see you have shovel
+        print "2. Keep walking."
+
+        choice = raw_input(">")
+
+        if choice == "1":
+            return 'hitSomething' #need to add
+        elif choice == "2":
+            return 'leaving'
+        else:
+            print "I don't understand that! Please try again."
+            return 'digging'
+
+
+class HitSomething(Scene):
+    def enter(self):
+        print "Wow!!! Your shovel just hit something hard."
+        print "You dig out the object until"
+        print "you unearth a small wooden treasure chest."
+        print "You look at the chest and it has a lock on "
+        print "the front."
+
+        print "\n"
+        print "Do you:"
+        print "1. Try unlocking with a golden key." # try again message
+        # check for golden key
+        print "2. Keep investigating the chest." # send to heart
+
+        choice = raw_input(">")
+
+        if choice == "1":
+            # check and make sure you have the key
+            # if not ask if want to get it
+
+            print "The golden key doesn't unlock the chest."
+            return 'HitSomething' #need to add
+
+        elif choice == "2":
+            return 'investigate'
+        else:
+            print "I don't understand that! Please try again."
+            return 'HitSomething'
+
+
+class Investigate(Scene):
+    def enter(self):
+        print "That's interesting. You see a heart shaped indentation on the chest."
+        print "It looks like the heart shaped glass you found on the beach is the same shape."
+
+        print "\n"
+        print "Do you:"
+        print "1. Try fitting the glass heart into the chest." # try again message
+        # check for golden key
+        print "2. Try the golden key in the lock again." # send to unlock because it didn't unlock
+
+        choice = raw_input(">")
+
+        if choice == "2":
+            # check and make sure you have the key
+            # if not ask if want to get it
+
+            print "The golden key doesn't unlock the chest."
+            return 'HitSomething' #need to add
+
+        elif choice == "2":
+            return 'unlock'
+        else:
+            print "I don't understand that! Please try again."
+            return 'HitSomething'
+
+class Unlock(Scene):
+    def enter(self):
+        print "The glass heart fits in the indentation and you can't take it back out."
+
+        print "\n"
+        print "Do you:"
+        print "1. Try unlocking the chest with the golden key again." # try again message
+        # check for golden key
+        print "2. Shake the box and give up because it won't open."
+
+
+class Treasure(Scene):
+    def enter(self):
         print "The treasure chest opens and it is filled with gold Spanish doubloons. "
 
         return 'finished'
@@ -194,6 +293,8 @@ class Map(object):
         'medical': Medical(),
         'finished': Finished(),
         'navigate': Navigate(),
+        'digging': Digging(),
+
     }
 
     ## Need more scenes definitions ... eg., inventory, walk on beach, etc
