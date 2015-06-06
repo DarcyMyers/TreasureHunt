@@ -188,14 +188,19 @@ class Digging(Scene):
 
         print "\n"
         print "Do you:"
-        print "1. Start digging on the X with your shovel."
+        print "1. Start digging."
         # check to see you have shovel
         print "2. Keep walking."
 
         choice = raw_input(">")
 
         if choice == "1":
-            return 'hitSomething' #need to add
+            if 'shovel' in inventory:
+                return 'hit_something' #need to add
+            else:
+                print "You don't have a shovel, but you went back to get the one you found earlier so that you can start digging."
+                inventory.add('shovel')
+                return 'hit_something'
         elif choice == "2":
             return 'leaving'
         else:
@@ -220,17 +225,19 @@ class HitSomething(Scene):
         choice = raw_input(">")
 
         if choice == "1":
-            # check and make sure you have the key
-            # if not ask if want to get it
+            if 'key' in inventory:
 
-            print "The golden key doesn't unlock the chest."
-            return 'HitSomething' #need to add
-
+                print "The golden key doesn't unlock the chest."
+                return 'hit_something' #need to add
+            else:
+                print "Sorry, you didn't think to pick up the key. So you went back to get the key you found earlier so you can try unlocking the chest."
+                inventory.add('key')
+                return 'hit_something'
         elif choice == "2":
             return 'investigate'
         else:
             print "I don't understand that! Please try again."
-            return 'HitSomething'
+            return 'hit_something'
 
 
 class Investigate(Scene):
@@ -246,12 +253,12 @@ class Investigate(Scene):
 
         choice = raw_input(">")
 
-        if choice == "2":
+        if choice == "1":
             # check and make sure you have the key
             # if not ask if want to get it
 
             print "The golden key doesn't unlock the chest."
-            return 'HitSomething' #need to add
+            return 'hit_something' #need to add
 
         elif choice == "2":
             return 'unlock'
